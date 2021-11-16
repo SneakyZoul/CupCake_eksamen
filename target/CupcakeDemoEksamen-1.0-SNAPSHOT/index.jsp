@@ -1,4 +1,6 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="business.services.CupCakeUtil.Initializer" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,8 +15,20 @@
     </header>
 
 </head>
-<body>
 
+
+
+
+<body>
+<%
+if(request.getServletContext().getAttribute("toppinList")==null){
+    request.getServletContext().setAttribute("toppinList",Initializer.getToppingList());
+}
+
+if(request.getServletContext().getAttribute("bundeList")==null){
+    request.getServletContext().setAttribute("bundeList",Initializer.getBundeList());
+}
+%>
 
 
 <!--<img src="../gifs/cupcake.gif" alt="gifman"-->
@@ -42,32 +56,24 @@
         <h1 class="display-4"><b>Velkommen ombord </b></h1>
         <h4> Øens bedste cupcakes. Vælg og bestil her:</h4>
 
-        <form action="receipt.html" method="post">
+        <form action="CheckoutServlet" method="post">
             <div class="form-inline justify-content-center align-items-center" style="padding: 2%;">
                 <div class="form-group mx-sm-4 mb-4">
-                    <label for="Vælg Bund"></label>
-                    <select class="form-control" id="Vælg Bund" name="Vælg Topping">
-                        <option value="" disabled selected hidden>Vælg Bund</option>
-                        <option>Chocolate</option>
-                        <option>Vanilla</option>
-                        <option>Nutmeg</option>
-                        <option>Pistacio</option>
-                        <option>Almond</option>
+                    <label for="dropdown1"></label>
+                    <select class="form-control" id="dropdown1" name="chooseBund">
+                          <option value="" disabled selected hidden >Vælg Bund</option>
+                        <c:forEach var="bundeItem" items="${applicationScope.bundeList}">
+                        <option value="${bundeItem.bundeId}" >${bundeItem.navn}</option>
+                        </c:forEach>
                     </select>
                 </div>
                 <div class="form-group mx-sm-4 mb-4">
-                    <label for="Vælg Topping"></label>
-                    <select class="form-control" id="Vælg Topping" name="Vælg Topping">
-                        <option value="" disabled selected hidden>Vælg Topping</option>
-                        <option>Chocolate</option>
-                        <option>Blueberry</option>
-                        <option>Raspberry</option>
-                        <option>Crispy</option>
-                        <option>Strawberry</option>
-                        <option>Rum/Raisin</option>
-                        <option>Orange</option>
-                        <option>Lemon</option>
-                        <option>Blue Cheese</option>
+                    <label for="dropdown2"></label>
+                    <select class="form-control" id="dropdown2" name="chooseTopping">
+                        <option value="" disabled selected hidden >Vælg Topping</option>
+                       <c:forEach var="toppingItem" items="${applicationScope.toppinList}">
+                        <option value="${toppingItem.toppingId}">${toppingItem.navn}</option>
+                       </c:forEach>
                     </select>
                 </div>
                 <div class="form-group mx-sm-4 mb-4">
@@ -88,7 +94,7 @@
                 </div>
             </div>
             <div class="justify-content-center align-items-center">
-                <button class="btn btn-primary mb-1" type="submit">Læg i kurv</button>
+                <button class="btn btn-primary mb-1 MainPageButton"  type="submit" value="submit" >Læg i kurv</button>
             </div>
         </form>
     </div>
