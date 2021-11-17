@@ -9,6 +9,8 @@ public class Cupcake {
     private int cupcakeId;
     private int toppingId;
     private int bundId;
+    private int antal;
+    private double pris = topping.getPris() + bunde.getPris() * antal;
 
     public static List<Cupcake> cupcakeList = new ArrayList<>();
 

@@ -34,6 +34,8 @@ public class CheckoutServlet extends HttpServlet {
             Topping topping;
             Bunde bund;
 
+            int antal = Integer.parseInt(request.getParameter("Antal"));
+
             String toppingNavn = request.getParameter("chooseTopping");
 
             String bundNavn = request.getParameter("chooseBund");
