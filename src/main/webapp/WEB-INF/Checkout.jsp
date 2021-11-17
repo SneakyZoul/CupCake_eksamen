@@ -80,20 +80,13 @@
         <th> Toppings:</th>
         <th> Antal:</th>
         <th> I Alt:</th>
-        <c:forEach var="cupcakeItem" items="${sessionScope.cupcakeList}}">
-
-        <tr>
-            <c:forEach var="bundeItem" items="${sessionScope.bundeList}">
-                <td> ${bundeItem}</td>
-            </c:forEach>
-
-            <c:forEach var="toppingItem" items="${sessionScope.toppingList}">
-                <td>${toppingItem} </td>
-            </c:forEach>
-
-            <td> 5 stk</td>
-            <td> 120,- :</td>
-        </tr>
+        <c:forEach var="cupcakeItem" items="${sessionScope.cupcakeList}">
+            <tr>
+                <td>${cupcakeItem.bunde.navn}</td>
+                <td>${cupcakeItem.topping.navn}</td>
+                <td> 5 stk</td>
+                <td> 120,- :</td>
+            </tr>
         </c:forEach>
         <tr>
             <td>Ialt</td>

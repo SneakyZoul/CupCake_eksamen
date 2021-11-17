@@ -5,15 +5,15 @@ import java.util.List;
 public class Bunde
 {
     private int bundeId;
-    private String navn;
+    public String navn;
     private double pris;
 
     List<Bunde> bundeList;
 
-    public Bunde(String navn, double pris)
+    public Bunde(String navn)
     {
         this.navn = navn;
-        this.pris = pris;
+
     }
 
     public Bunde(int bundeId, String navn, double pris)

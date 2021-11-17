@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Topping {
     private int toppingId;
-    private String navn;
+    public String navn;
     private double pris;
 
     public static List<Topping> toppingList;

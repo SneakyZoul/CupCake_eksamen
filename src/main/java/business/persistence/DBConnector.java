@@ -34,8 +34,7 @@ public class DBConnector {
         return con;
     }
 
-    public String insert(Object object) throws Exception
-    {
+    public String insert(Object object) throws Exception {
         loadDriver(dbdriver);
         Connection con = getConnection();
         String result = "";
@@ -50,11 +49,9 @@ public class DBConnector {
                 ps.setString(3, kunde.getPassword());
                 ps.setString(4, kunde.getAddress());
                 ps.setInt(5, kunde.getPostNr());
-                try
-                {
+                try {
                     ps.executeUpdate();
-                } catch(SQLIntegrityConstraintViolationException e)
-                {
+                } catch (SQLIntegrityConstraintViolationException e) {
                     throw new UserException("Email Already Exist");
                 }
 
@@ -131,8 +128,7 @@ public class DBConnector {
         return result;
     }
 
-    public Kunde receiveKunde(String emailInput, String passwordInput)
-    {
+    public Kunde receiveKunde(String emailInput, String passwordInput) {
         loadDriver(dbdriver);
         Connection con = getConnection();
         Statement stmt = null;
@@ -144,8 +140,7 @@ public class DBConnector {
             e.printStackTrace();
         }
         String sql = " SELECT * FROM CupcakeDB.kunder";
-        try
-        {
+        try {
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 int kundeId = rs.getInt("kunde_id");
@@ -154,14 +149,12 @@ public class DBConnector {
                 int postNr = rs.getInt("postNr");
                 String password = rs.getString("password");
                 String email = rs.getString("email");
-                if (emailInput.equals(email) && passwordInput.equals(password))
-                {
+                if (emailInput.equals(email) && passwordInput.equals(password)) {
                     kunde = new Kunde(kundeId, navn, email, password, adresse, postNr);
                     return kunde;
                 }
             }
-        } catch (SQLException e)
-        {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
@@ -189,9 +182,7 @@ public class DBConnector {
                 if (kunde.getKundeId() == kundeId) {
                     Order order = new Order(ordrerId, kundeId, pris);
                     orderList.add(order);
-                }
-                else
-                {
+                } else {
                     System.out.println("Kunde har ikke nogen ordrer!");
                     return orderList;
                 }
@@ -214,152 +205,122 @@ public class DBConnector {
             e.printStackTrace();
         }
         String sql = " SELECT * FROM CupcakeDB.OrderLinje";
-        try
-        {
+        try {
             ResultSet rs = stmt.executeQuery(sql);
-            while (rs.next())
-            {
+            while (rs.next()) {
                 int orderLinjeId = rs.getInt("orderLinje_id");
                 int cupcakeId = rs.getInt("cupcake_id");
                 int ordrerId = rs.getInt("ordrer_id");
 
-                if(order.getOrdrerId() == ordrerId )
-                {
+                if (order.getOrdrerId() == ordrerId) {
                     OrderLinje orderLinje = new OrderLinje(orderLinjeId, cupcakeId, ordrerId);
                     orderLinjeList.add(orderLinje);
                 }
             }
             return orderLinjeList;
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public List<Cupcake> receiveCupcake(OrderLinje orderLinje)
-    {
+    public List<Cupcake> receiveCupcake(OrderLinje orderLinje) {
         loadDriver(dbdriver);
         Connection con = getConnection();
         Statement stmt = null;
         List<Cupcake> cupcakeList = new ArrayList<>();
-        try
-        {
+        try {
             stmt = con.createStatement();
-        }
-        catch (SQLException e)
-        {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         String sql = " SELECT * FROM CupcakeDB.cupcake";
-        try
-        {
+        try {
             ResultSet rs = stmt.executeQuery(sql);
-            while (rs.next())
-            {
+            while (rs.next()) {
                 int cupcakeId = rs.getInt("cupcake_id");
                 int toppingId = rs.getInt("topping_id");
                 int bundId = rs.getInt("bund_id");
-                if(orderLinje.getCupcakeId() == cupcakeId)
-                {
+                if (orderLinje.getCupcakeId() == cupcakeId) {
                     Cupcake cupcake = new Cupcake(cupcakeId, toppingId, bundId);
                     cupcakeList.add(cupcake);
-                }
-                else
-                {
+                } else {
                     System.out.println("no cupcakes");
                 }
             }
             return cupcakeList;
-        } catch (SQLException e)
-        {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public List<Bunde> receiveBunde()
-    {
+    public List<Bunde> receiveBunde() {
         loadDriver(dbdriver);
         Connection con = getConnection();
         Statement stmt = null;
 
         List<Bunde> bundeList = new ArrayList<>();
-        try
-        {
+        try {
             stmt = con.createStatement();
-        }
-        catch (SQLException e)
-        {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         String sql = " SELECT * FROM CupcakeDB.bunde";
-        try
-        {
+        try {
             ResultSet rs = stmt.executeQuery(sql);
-            while (rs.next())
-            {
+            while (rs.next()) {
                 int bundeId = rs.getInt("bunde_id");
                 String navn = rs.getString("navn");
                 double pris = rs.getDouble("pris");
 
-                    Bunde bunde = new Bunde(bundeId, navn, pris);
-                    bundeList.add(bunde);
+                Bunde bunde = new Bunde(bundeId, navn, pris);
+                bundeList.add(bunde);
 
             }
             return bundeList;
-        } catch (SQLException e)
-        {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public List<Topping> receiveTopping()
-    {
+    public List<Topping> receiveTopping() {
         loadDriver(dbdriver);
         Connection con = getConnection();
         Statement stmt = null;
 
         List<Topping> toppingList = new ArrayList<>();
-        try
-        {
+        try {
             stmt = con.createStatement();
-        }
-        catch (SQLException e)
-        {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         String sql = " SELECT * FROM CupcakeDB.topping";
-        try
-        {
+        try {
             ResultSet rs = stmt.executeQuery(sql);
-            while (rs.next())
-            {
+            while (rs.next()) {
                 int toppingId = rs.getInt("topping_id");
                 String navn = rs.getString("navn");
                 double pris = rs.getDouble("pris");
-                    Topping topping = new Topping(toppingId, navn, pris);
-                    toppingList.add(topping);
+                Topping topping = new Topping(toppingId, navn, pris);
+                toppingList.add(topping);
 
             }
             return toppingList;
-        } catch (SQLException e)
-        {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public String updateKunde(Kunde kunde)
-    {
+    public String updateKunde(Kunde kunde) {
         loadDriver(dbdriver);
         Connection con = getConnection();
         String result = "";
         result = "data entered succesfully";
-        String sql = "UPDATE CupcakeDB.kunder SET navn=?, email=?, password=?, adresse=?, postNr=? WHERE kunde_id="+kunde.getKundeId();
-        try
-        {
+        String sql = "UPDATE CupcakeDB.kunder SET navn=?, email=?, password=?, adresse=?, postNr=? WHERE kunde_id=" + kunde.getKundeId();
+        try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, kunde.getName());
             ps.setString(2, kunde.getEmail());
@@ -367,9 +328,7 @@ public class DBConnector {
             ps.setString(4, kunde.getAddress());
             ps.setInt(5, kunde.getPostNr());
             ps.executeUpdate();
-        }
-        catch (SQLException e)
-        {
+        } catch (SQLException e) {
             e.printStackTrace();
             result = "Data not entered";
         }

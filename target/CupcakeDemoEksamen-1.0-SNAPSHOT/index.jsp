@@ -43,8 +43,8 @@ if(request.getServletContext().getAttribute("bundeList")==null){
         <a href="customer.html" class="bannerText" style="text-decoration: none;"> Kunder </a>
 
         <span class="icon">
-            <a href="basket.html" class="icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag"
+            <a href="CheckoutServlet" class="icon">
+                <svg xmlns="http://www.w3.org/2000/svg" name="orderAct" value="viewBasket" width="16" height="16" fill="currentColor" class="bi bi-bag"
                      viewBox="0 0 16 16">
                     <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z"/>
                 </svg>
@@ -63,7 +63,7 @@ if(request.getServletContext().getAttribute("bundeList")==null){
                     <select class="form-control" id="dropdown1" name="chooseBund">
                           <option value="" disabled selected hidden >Vælg Bund</option>
                         <c:forEach var="bundeItem" items="${applicationScope.bundeList}">
-                        <option value="${bundeItem.bundeId}" >${bundeItem.navn}</option>
+                        <option value="${bundeItem.navn}" >${bundeItem.navn}</option>
                         </c:forEach>
                     </select>
                 </div>
@@ -72,7 +72,7 @@ if(request.getServletContext().getAttribute("bundeList")==null){
                     <select class="form-control" id="dropdown2" name="chooseTopping">
                         <option value="" disabled selected hidden >Vælg Topping</option>
                        <c:forEach var="toppingItem" items="${applicationScope.toppinList}">
-                        <option value="${toppingItem.toppingId}">${toppingItem.navn}</option>
+                        <option value="${toppingItem.navn}">${toppingItem.navn}</option>
                        </c:forEach>
                     </select>
                 </div>
@@ -94,7 +94,7 @@ if(request.getServletContext().getAttribute("bundeList")==null){
                 </div>
             </div>
             <div class="justify-content-center align-items-center">
-                <button class="btn btn-primary mb-1 MainPageButton"  type="submit" value="submit" >Læg i kurv</button>
+                <button class="btn btn-primary mb-1 MainPageButton" name="orderAct" type="submit" value="addToBasket" >Læg i kurv</button>
             </div>
         </form>
     </div>

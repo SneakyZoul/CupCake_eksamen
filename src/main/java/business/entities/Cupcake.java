@@ -1,17 +1,21 @@
 package business.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Cupcake {
+    private Topping topping;
+    private Bunde bunde;
     private int cupcakeId;
     private int toppingId;
     private int bundId;
 
-    public List<Cupcake> cupcakeList;
+    public static List<Cupcake> cupcakeList = new ArrayList<>();
 
-    public Cupcake(int toppingId, int bundId) {
-        this.toppingId = toppingId;
-        this.bundId = bundId;
+    public Cupcake(Topping topping, Bunde bunde) {
+
+        this.topping = topping;
+        this.bunde = bunde;
     }
 
 
@@ -38,6 +42,12 @@ public class Cupcake {
         return cupcakeList;
     }
 
+    public Topping getTopping() {
+        return topping;
+    }
 
+    public Bunde getBunde() {
+        return bunde;
+    }
 }
 
